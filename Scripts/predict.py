@@ -101,6 +101,7 @@ if __name__ == "__main__":
     json_filename = args.config
     input_filename = args.input
     output_directory = args.output
+
     output_filename = "{}_baseline_predictions.csv".format(
         input_filename.split("/")[-1].split(".")[0]
     )

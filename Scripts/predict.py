@@ -113,5 +113,5 @@ if __name__ == "__main__":
         config=config, input_filename=input_filename, output_filename=output_filename
     )
     print(
-        "\n--------------------\nModel prediction completetd!\n--------------------\n"
+        "\n--------------------\nModel prediction completed!\n--------------------\n"
     )

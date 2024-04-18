@@ -1,0 +1,9 @@
+{
+    "Model": {
+        "modelName": "Babelscape/rebel-large",
+        "maxLength": 256,
+        "lengthPenalty": 0,
+        "numBeams": 3,
+        "numReturnSequences": 3
+    }
+}

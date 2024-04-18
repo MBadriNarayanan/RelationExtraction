@@ -12,7 +12,7 @@ from utils import extract_triplets
 flatten = itertools.chain.from_iterable
 
 
-def get_predictions(config, input_filename, output_filename):
+def get_predictions(config, input_filename, output_filepath):
     if torch.cuda.is_available():
         device = torch.device("cuda")
         print("CUDA available!")
@@ -75,7 +75,7 @@ def get_predictions(config, input_filename, output_filename):
         del predictions
     df["GroundTruth"] = ground_truth_list
     df["Predictions"] = prediction_list
-    df.to_csv(output_filename, index=False)
+    df.to_csv(output_filepath, index=False)
     torch.cuda.empty_cache()
 
 
@@ -111,8 +111,6 @@ if __name__ == "__main__":
         config = json.load(json_file)
 
     get_predictions(
-        config=config, input_filename=input_filename, output_filename=output_filename
+        config=config, input_filename=input_filename, output_filepath=output_filepath
     )
-    print(
-        "\n--------------------\nModel prediction completed!\n--------------------\n"
-    )
+    print("\n--------------------\nModel prediction completed!\n--------------------\n")

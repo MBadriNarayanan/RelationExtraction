@@ -1,5 +1,7 @@
+import ast
 import os
-from tqdm import tqdm
+
+import pandas as pd
 
 
 def create_directory(directory, print_flag=True):
@@ -58,3 +60,19 @@ def extract_triplets(text):
             {"head": subject.strip(), "type": relation.strip(), "tail": object_.strip()}
         )
     return triplets
+
+
+def get_entity_relation_dataframe(df, column_name):
+    dataframe = pd.DataFrame(columns=["e1", "e2", "relation"])
+
+    for _, row in df.iterrows():
+        data = ast.literal_eval(row[column_name])
+        for triplet in data:
+            e1 = triplet.get("head", "").strip()
+            relation = triplet.get("type", "").strip()
+            e2 = triplet.get("tail", "").strip()
+            triplet_data = pd.DataFrame(
+                {"e1": [e1], "e2": [e2], "relation": [relation]}
+            )
+            dataframe = pd.concat([dataframe, triplet_data], ignore_index=True)
+    return dataframe

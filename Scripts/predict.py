@@ -96,8 +96,8 @@ if __name__ == "__main__":
     parser.add_argument(
         "--output", "-O", type=str, help="Output CSV Directory", required=True
     )
-    args = parser.parse_args()
 
+    args = parser.parse_args()
     json_filename = args.config
     input_filename = args.input
     output_directory = args.output

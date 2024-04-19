@@ -1,0 +1,6 @@
+Metrics for the file: /Users/badri/Desktop/RelationExtraction/data/dev/3triples_baseline_predictions_baseline_metrics.csv
+--------------------
+Avg Precision: 0.724
+Avg Recall: 0.749
+Avg F1-Score: 0.718
+--------------------

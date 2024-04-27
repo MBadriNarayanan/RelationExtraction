@@ -1,6 +1,17 @@
-Metrics for the file: /Users/badri/Desktop/RelationExtraction/data/dev/3triples_baseline_predictions_baseline_metrics.csv
+Metrics for the file: RelationExtraction/data/dev/3triples_baseline_predictions_baseline_metrics.csv
 --------------------
-Avg Precision: 0.724
-Avg Recall: 0.749
-Avg F1-Score: 0.718
+Avg Precision for Entiy 1: 0.847
+Avg Recall for Entiy 1: 0.805
+Avg F1-Score for Entiy 1: 0.811
+Avg Similarity for Entiy 1: 0.798
+--------------------
+Avg Precision for Entiy 2: 0.713
+Avg Recall for Entiy 2: 0.631
+Avg F1-Score for Entiy 2: 0.646
+Avg Similarity for Entiy 2: 0.612
+--------------------
+Avg Precision for Relation: 0.525
+Avg Recall for Relation: 0.638
+Avg F1-Score for Relation: 0.532
+Avg Similarity for Relation: 0.445
 --------------------

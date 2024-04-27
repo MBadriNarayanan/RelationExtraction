@@ -107,26 +107,49 @@ def rank_extractions(ground_truth, prediction):
     e2_gt = ground_truth["e2"]
     relation_gt = ground_truth["relation"]
     ground_truth = "{} {} {}".format(e1_gt, relation_gt, e2_gt)
-    score_list = []
 
-    for idx, data in enumerate(prediction):
+    score_dict = {
+        "E1_GT": e1_gt.strip(),
+        "E1_Pred": "",
+        "E1_Similarity": 0.0,
+        "E2_GT": e2_gt.strip(),
+        "E2_Pred": "",
+        "E2_Similarity": 0.0,
+        "Relation_GT": relation_gt.strip(),
+        "Relation_Pred": "",
+        "Relation_Similarity": 0.0,
+        "GroundTruth": ground_truth.strip(),
+        "Prediction": "",
+    }
+
+    for data in prediction:
         e1_pred = data["e1"]
         e2_pred = data["e2"]
         relation_pred = data["relation"]
 
-        e1_similarity = SequenceMatcher(None, e1_pred.lower(), e1_gt.lower()).ratio()
-        e2_similarity = SequenceMatcher(None, e2_pred.lower(), e2_gt.lower()).ratio()
-        relation_similarity = SequenceMatcher(
-            None, relation_pred.lower(), relation_gt.lower()
-        ).ratio()
-
-        similarity_score = (
-            (0.33 * e1_similarity)
-            + (0.33 * e2_similarity)
-            + (0.34 * relation_similarity)
+        e1_similarity = round(
+            SequenceMatcher(None, e1_pred.lower(), e1_gt.lower()).ratio(), 3
         )
-        similarity_score = round(similarity_score, 3)
-        score_list.append([similarity_score, idx])
-    score_list.sort()
-    score_list = score_list[::-1]
-    return score_list, ground_truth
+        e2_similarity = round(
+            SequenceMatcher(None, e2_pred.lower(), e2_gt.lower()).ratio(), 3
+        )
+        relation_similarity = round(
+            SequenceMatcher(None, relation_pred.lower(), relation_gt.lower()).ratio(), 3
+        )
+
+        if e1_similarity >= score_dict["E1_Similarity"]:
+            score_dict["E1_Pred"] = e1_pred.strip()
+            score_dict["E1_Similarity"] = e1_similarity
+
+        if e2_similarity >= score_dict["E2_Similarity"]:
+            score_dict["E2_Pred"] = e2_pred.strip()
+            score_dict["E2_Similarity"] = e2_similarity
+
+        if relation_similarity >= score_dict["Relation_Similarity"]:
+            score_dict["Relation_Pred"] = relation_pred.strip()
+            score_dict["Relation_Similarity"] = relation_similarity
+
+    score_dict["Prediction"] = "{} {} {}".format(
+        score_dict["E1_Pred"], score_dict["Relation_Pred"], score_dict["E2_Pred"]
+    )
+    return score_dict

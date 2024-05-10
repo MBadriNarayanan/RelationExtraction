@@ -1,0 +1,29 @@
+{
+    "Model": {
+        "sequenceLength": 512,
+        "truncationFlag": true,
+        "paddingFlag": true,
+        "returnTensors": "pt"
+    },
+    "Logs": {
+        "checkpointDirectory": "Checkpoints",
+        "logsDirectory": "Logs"
+    },
+    "Train": {
+        "csvPath": "data/train/3triples.csv",
+        "batchSize": 16,
+        "startEpoch": 1,
+        "endEpoch": 10,
+        "learningRate": 5e-3,
+        "continueFlag": false,
+        "continueCheckpointPath": ""
+    },
+    "Eval": {
+        "csvPath": "data/dev/3triples.csv",
+        "batchSize": 16,
+        "checkpointPath": "Checkpoints/model.pt",
+        "lengthPenalty": 0,
+        "numBeams": 3,
+        "returnSequences": 3
+    }
+}

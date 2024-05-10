@@ -4,7 +4,7 @@ import os
 import pandas as pd
 
 from tqdm import tqdm
-from utils import (
+from metrics_utils import (
     get_entity_relation_data,
     get_precision_recall_f1_score,
     rank_extractions,
@@ -87,7 +87,7 @@ def compute_metrics(input_filename, output_filepath):
     write_string = "Metrics for the file: {}\n--------------------\n".format(
         input_filename
     )
-    with open(output_filepath, "w") as report_file:
+    with open(output_filepath, "at") as report_file:
         report_file.write(write_string)
 
     df = pd.read_csv(input_filename)
@@ -231,18 +231,26 @@ if __name__ == "__main__":
         help="Output Directory to store metrics report",
         required=True,
     )
+    parser.add_argument(
+        "--file-name",
+        "-F",
+        type=str,
+        help="Output CSV File Name",
+        required=True,
+    )
     args = parser.parse_args()
 
     input_filename = args.input
     output_directory = args.output
+    output_filename = args.file_name
 
-    output_csv_filename = "{}_baseline_metrics.csv".format(
-        input_filename.split("/")[-1].split(".")[0]
+    output_csv_filename = "{}_{}_metrics.csv".format(
+        input_filename.split("/")[-1].split(".")[0], output_filename
     )
     output_csv_path = os.path.join(output_directory, output_csv_filename)
 
-    output_filename = "{}_baseline_report.txt".format(
-        input_filename.split("/")[-1].split(".")[0]
+    output_filename = "{}_{}_report.txt".format(
+        input_filename.split("/")[-1].split(".")[0], output_filename
     )
     output_filepath = os.path.join(output_directory, output_filename)
 

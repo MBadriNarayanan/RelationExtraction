@@ -4,7 +4,7 @@ import os
 import pandas as pd
 
 from tqdm import tqdm
-from utils import create_directory
+from general_utils import create_directory
 
 if __name__ == "__main__":
     print(

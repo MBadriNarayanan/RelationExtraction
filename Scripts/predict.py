@@ -7,7 +7,7 @@ import itertools
 import pandas as pd
 from tqdm import tqdm
 from transformers import AutoModelForSeq2SeqLM, AutoTokenizer
-from utils import extract_triplets
+from general_utils import extract_triplets
 
 flatten = itertools.chain.from_iterable
 

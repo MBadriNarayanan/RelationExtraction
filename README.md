@@ -5,8 +5,8 @@ A machine learning system for extracting complex relationships between entities 
 ## Contributors
 
 * Badri Narayanan Murali Krishnan [LinkedIn](https://www.linkedin.com/in/mbadrinarayanan/) [GitHub](https://github.com/MBadriNarayanan)
-* Devaki Kulkarni [LinkedIn]() [GitHub]()
-* Sree Sanjeev Kandasamy Gokulrajan [LinkedIn]() [GitHub]()
+* Devaki Kulkarni [LinkedIn](https://www.linkedin.com/in/devaki-kulkarni-53252318b/) [GitHub](https://github.com/devaki9)
+* Sree Sanjeev Kandasamy Gokulrajan [LinkedIn](https://www.linkedin.com/in/sreesanjeevkg/) [GitHub](https://github.com/sreesanjeevkg)
 
 ## Citations
 

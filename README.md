@@ -12,7 +12,6 @@ A machine learning system for extracting complex relationships between entities 
 
 Replicated the following scripts and trained a smaller variant to get baseline results
 - `generate_samples.py`
-- `model_saving.py`
 - `pl_data_modules.py`
 - `pl_modules.py`
 - `utils.py`

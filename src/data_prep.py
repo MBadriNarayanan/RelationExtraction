@@ -1,13 +1,16 @@
 import numpy as np
 import json
 
-data_prompt = """Analyze the provided text from a mental health perspective. Identify any indicators of emotional distress, coping mechanisms, or psychological well-being. Highlight any potential concerns or positive aspects related to mental health, and provide a brief explanation for each observation.
+example = "[{'subject': 'sub', 'predicate': 'pred', 'object': 'obj'}]"
 
-### Input:
-{}
+def data_prompt(user_msg, model_answer): return f"""<|begin_of_text|><|start_header_id|>system<|end_header_id|>
 
-### Response:
-{}"""
+Given the following text, print out a list of triplets in the following JSON format: {example}<|eot_id|><|start_header_id|>user<|end_header_id|>
+
+{user_msg}<|eot_id|><|start_header_id|>assistant<|end_header_id|>
+
+{model_answer}<|eot_id|>
+"""
 
 for filename in ['sample.jsonl']:
     with open(filename) as f:
@@ -21,7 +24,7 @@ for filename in ['sample.jsonl']:
                 trip_simple.append({"subject": trip["subject"]["surfaceform"],
                                     "predicate": trip["predicate"]["surfaceform"],
                                     "object": trip["object"]["surfaceform"]})
-            print({"text": text, "triples": trip_simple})
+            print(data_prompt(text, triples))
             i += 1
             if i >= 2:
                 break

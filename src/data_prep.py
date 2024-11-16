@@ -3,14 +3,10 @@ import json
 
 example = "[{'subject': 'sub', 'predicate': 'pred', 'object': 'obj'}]"
 
-def data_prompt(user_msg, model_answer): return f"""<|begin_of_text|><|start_header_id|>system<|end_header_id|>
-
-Given the following text, print out a list of triplets in the following JSON format: {example}<|eot_id|><|start_header_id|>user<|end_header_id|>
-
-{user_msg}<|eot_id|><|start_header_id|>assistant<|end_header_id|>
-
-{model_answer}<|eot_id|>
-"""
+def data_prompt(user_msg, model_answer):
+    return {"messages": [{"role": "system", "content": f"Given the following text, print out a list of triplets in the following JSON format: {example}"},
+                         {"role": "user", "content": user_msg},
+                         {"role": "assistant", "content": json.dumps(model_answer)}]}
 
 for filename in ['sample.jsonl']:
     with open(filename) as f:

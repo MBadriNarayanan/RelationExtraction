@@ -1,5 +1,5 @@
-
 from torch.optim.lr_scheduler import LambdaLR
+
 
 def get_inverse_square_root_schedule_with_warmup(
     optimizer, num_warmup_steps, warmup_init_lr=-1, last_epoch=-1
@@ -33,7 +33,7 @@ def get_inverse_square_root_schedule_with_warmup(
     lr_step = (warmup_end_lr - warmup_init_lr) / num_warmup_steps
 
     # then, decay prop. to the inverse square root of the update number
-    decay_factor =  num_warmup_steps ** 0.5
+    decay_factor = num_warmup_steps**0.5
 
     # initial learning rate
     lr = warmup_init_lr
@@ -44,9 +44,9 @@ def get_inverse_square_root_schedule_with_warmup(
         """Update the learning rate after each update."""
         if current_step < num_warmup_steps:
             lr = warmup_init_lr + current_step * lr_step
-            lr = lr/warmup_end_lr
+            lr = lr / warmup_end_lr
         else:
-            lr = decay_factor * current_step ** -0.5
+            lr = decay_factor * current_step**-0.5
         return lr
 
     return LambdaLR(optimizer, lr_lambda, last_epoch)

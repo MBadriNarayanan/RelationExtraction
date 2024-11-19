@@ -169,38 +169,78 @@ def extract_triplets(text: str):
     return triplets
 
 
-def extract_triplets_typed(text, mapping_types= {'<peop>': 'Peop', '<org>': 'Org', '<other>': 'Other', '<loc>': 'Loc'}):
+def extract_triplets_typed(
+    text,
+    mapping_types={
+        "<peop>": "Peop",
+        "<org>": "Org",
+        "<other>": "Other",
+        "<loc>": "Loc",
+    },
+):
     triplets = []
-    relation = ''
+    relation = ""
     text = text.strip()
-    current = 'x'
-    subject, relation, object_, object_type, subject_type = '','','','',''
+    current = "x"
+    subject, relation, object_, object_type, subject_type = "", "", "", "", ""
 
-    for token in text.replace("<s>", "").replace("<pad>", "").replace("</s>", "").split():
+    for token in (
+        text.replace("<s>", "").replace("<pad>", "").replace("</s>", "").split()
+    ):
         if token == "<triplet>":
-            current = 't'
-            if relation != '':
-                triplets.append({'head': subject.strip(), 'head_type': subject_type, 'type': relation.strip(),'tail': object_.strip(), 'tail_type': object_type})
-                relation = ''
-            subject = ''
+            current = "t"
+            if relation != "":
+                triplets.append(
+                    {
+                        "head": subject.strip(),
+                        "head_type": subject_type,
+                        "type": relation.strip(),
+                        "tail": object_.strip(),
+                        "tail_type": object_type,
+                    }
+                )
+                relation = ""
+            subject = ""
         elif token in mapping_types:
-            if current == 't' or current == 'o':
-                current = 's'
-                if relation != '':
-                    triplets.append({'head': subject.strip(), 'head_type': subject_type, 'type': relation.strip(),'tail': object_.strip(), 'tail_type': object_type})
-                object_ = ''
+            if current == "t" or current == "o":
+                current = "s"
+                if relation != "":
+                    triplets.append(
+                        {
+                            "head": subject.strip(),
+                            "head_type": subject_type,
+                            "type": relation.strip(),
+                            "tail": object_.strip(),
+                            "tail_type": object_type,
+                        }
+                    )
+                object_ = ""
                 subject_type = mapping_types[token]
             else:
-                current = 'o'
+                current = "o"
                 object_type = mapping_types[token]
-                relation = ''
+                relation = ""
         else:
-            if current == 't':
-                subject += ' ' + token
-            elif current == 's':
-                object_ += ' ' + token
-            elif current == 'o':
-                relation += ' ' + token
-    if subject != '' and relation != '' and object_ != '' and object_type != '' and subject_type != '':
-        triplets.append({'head': subject.strip(), 'head_type': subject_type, 'type': relation.strip(),'tail': object_.strip(), 'tail_type': object_type})
+            if current == "t":
+                subject += " " + token
+            elif current == "s":
+                object_ += " " + token
+            elif current == "o":
+                relation += " " + token
+    if (
+        subject != ""
+        and relation != ""
+        and object_ != ""
+        and object_type != ""
+        and subject_type != ""
+    ):
+        triplets.append(
+            {
+                "head": subject.strip(),
+                "head_type": subject_type,
+                "type": relation.strip(),
+                "tail": object_.strip(),
+                "tail_type": object_type,
+            }
+        )
     return triplets

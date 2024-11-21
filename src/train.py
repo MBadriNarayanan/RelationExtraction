@@ -9,6 +9,7 @@ import wandb
 
 from datasets import load_dataset
 from dotenv import find_dotenv, load_dotenv
+from huggingface_hub import login
 from peft import LoraConfig, get_peft_model
 from transformers import (
     AutoModelForCausalLM,
@@ -28,7 +29,9 @@ time_string = time_string.strftime("%m_%d_%y_%H_%M_%S")
 uuid_identifier = uuid.uuid4()
 identifier = "{}_{}".format(time_string, uuid_identifier)
 
+hf_token = os.environ.get("HUGGINGFACE_TOKEN")
 wb_token = os.environ.get("WANDB_TOKEN", None)
+login(token=hf_token)
 wandb.login(key=wb_token)
 
 run = wandb.init(
@@ -45,8 +48,8 @@ def main():
     parser.add_argument(
         "--base_model",
         type=str,
-        default="models/llama-3.2/transformers/1b-instruct/1",
-        help="Path to the base model to be used",
+        default="meta-llama/Llama-3.2-1B-Instruct",
+        help="HuggingFace path of the base model to be used",
     )
     parser.add_argument(
         "--fine_tune_model",

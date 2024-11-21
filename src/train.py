@@ -164,7 +164,9 @@ def main():
         task_type="CAUSAL_LM",
         target_modules=modules,
     )
-    model, tokenizer = setup_chat_format(model, tokenizer)
+    #model, tokenizer = setup_chat_format(model, tokenizer)
+    if tokenizer.pad_token is None:
+        tokenizer.pad_token = tokenizer.eos_token
     model = get_peft_model(model, peft_config)
 
     data_files = {

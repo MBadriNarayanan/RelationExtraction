@@ -2,22 +2,9 @@ import json
 import os
 from tqdm import tqdm
 
+from .utils import data_prompt
+
 example = "[{'subject': 'sub', 'predicate': 'pred', 'object': 'obj'}]"
-
-
-def data_prompt(user_msg, model_answer):
-    return {
-        "messages": [
-            {
-                "role": "system",
-                "content": "Given the following text, print out a list of triplets in the following JSON format: {}".format(
-                    example
-                ),
-            },
-            {"role": "user", "content": user_msg},
-            {"role": "assistant", "content": json.dumps(model_answer)},
-        ]
-    }
 
 
 def main():
@@ -47,7 +34,7 @@ def main():
                             }
                         )
                     output_json_file.write(
-                        json.dumps(data_prompt(user_msg=text, model_answer=triples))
+                        json.dumps(data_prompt(user_msg=text, model_answer=triplet))
                         + "\n"
                     )
 

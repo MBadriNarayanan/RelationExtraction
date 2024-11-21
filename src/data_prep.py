@@ -1,6 +1,10 @@
 import json
 import os
+import sys
 from tqdm import tqdm
+
+project_root = os.path.dirname(os.path.dirname(os.path.realpath(__file__)))
+sys.path.append(project_root)
 
 from .utils import data_prompt
 

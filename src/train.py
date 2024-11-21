@@ -3,9 +3,13 @@ import datetime
 import os
 import pytz
 import subprocess
+import sys
 import torch
 import uuid
 import wandb
+
+project_root = os.path.dirname(os.path.dirname(os.path.realpath(__file__)))
+sys.path.append(project_root)
 
 from datasets import load_dataset
 from dotenv import find_dotenv, load_dotenv
@@ -54,7 +58,7 @@ def main():
     parser.add_argument(
         "--fine_tune_model",
         type=str,
-        default="models/fine_tune/llama-3.2-v1",
+        default="fine_tune/llama-3.2-v1",
         help="Path to be used to save the fine-tuned model",
     )
     parser.add_argument(

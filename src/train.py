@@ -45,7 +45,7 @@ def main():
     parser.add_argument(
         "--base_model",
         type=str,
-        default="models/llama-3.2/transformers/3b-instruct/1",
+        default="models/llama-3.2/transformers/1b-instruct/1",
         help="Path to the base model to be used",
     )
     parser.add_argument(

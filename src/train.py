@@ -3,13 +3,11 @@ import datetime
 import os
 import pytz
 import subprocess
-import sys
 import torch
 import uuid
 import wandb
 
-project_root = os.path.dirname(os.path.dirname(os.path.realpath(__file__)))
-sys.path.append(project_root)
+import bitsandbytes as bnb
 
 from datasets import load_dataset
 from dotenv import find_dotenv, load_dotenv
@@ -22,8 +20,6 @@ from transformers import (
     TrainingArguments,
 )
 from trl import SFTTrainer, setup_chat_format
-
-from .utils import find_all_linear_names
 
 load_dotenv(find_dotenv())
 
@@ -43,6 +39,18 @@ run = wandb.init(
     job_type="training",
     anonymous="allow",
 )
+
+
+def find_all_linear_names(model):
+    cls = bnb.nn.Linear4bit
+    lora_module_names = set()
+    for name, module in model.named_modules():
+        if isinstance(module, cls):
+            names = name.split(".")
+            lora_module_names.add(names[0] if len(names) == 1 else names[-1])
+    if "lm_head" in lora_module_names:
+        lora_module_names.remove("lm_head")
+    return list(lora_module_names)
 
 
 def main():

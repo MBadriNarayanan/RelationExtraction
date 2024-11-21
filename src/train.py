@@ -7,8 +7,7 @@ import torch
 import uuid
 import wandb
 
-import bitsandbytes as bnb
-
+from datasets import load_dataset
 from dotenv import find_dotenv, load_dotenv
 from peft import LoraConfig, get_peft_model
 from transformers import (
@@ -19,7 +18,7 @@ from transformers import (
 )
 from trl import SFTTrainer, setup_chat_format
 
-from .utils import create_logger
+from .utils import find_all_linear_names
 
 load_dotenv(find_dotenv())
 
@@ -30,7 +29,6 @@ uuid_identifier = uuid.uuid4()
 identifier = "{}_{}".format(time_string, uuid_identifier)
 
 wb_token = os.environ.get("WANDB_TOKEN", None)
-log_filename, log_identifier = create_logger(flag="Train")
 wandb.login(key=wb_token)
 
 run = wandb.init(
@@ -38,18 +36,6 @@ run = wandb.init(
     job_type="training",
     anonymous="allow",
 )
-
-
-def find_all_linear_names(model):
-    cls = bnb.nn.Linear4bit
-    lora_module_names = set()
-    for name, module in model.named_modules():
-        if isinstance(module, cls):
-            names = name.split(".")
-            lora_module_names.add(names[0] if len(names) == 1 else names[-1])
-    if "lm_head" in lora_module_names:
-        lora_module_names.remove("lm_head")
-    return list(lora_module_names)
 
 
 def main():
@@ -71,14 +57,14 @@ def main():
     parser.add_argument(
         "--train_data",
         type=str,
-        default="data/train",
+        default="prepared_data/llama_train.jsonl",
         help="Train data to fine-tune the model",
     )
     parser.add_argument(
         "--val_data",
         type=str,
-        default="data/val",
-        help="Val data folder to fine-tune the model",
+        default="prepared_data/llama_val.jsonl",
+        help="Val data to fine-tune the model",
     )
     parser.add_argument(
         "--lora_rank", type=int, default=16, help="Rank of the low-rank adaptation"
@@ -166,6 +152,12 @@ def main():
     model, tokenizer = setup_chat_format(model, tokenizer)
     model = get_peft_model(model, peft_config)
 
+    data_files = {
+        "train": args.train_data,
+        "validation": args.val_data,
+    }
+    dataset = load_dataset("json", data_files=data_files)
+
     training_arguments = TrainingArguments(
         output_dir=args.fine_tune_model,
         per_device_train_batch_size=args.train_batch_size,
@@ -188,10 +180,10 @@ def main():
     trainer = SFTTrainer(
         model=model,
         train_dataset=dataset["train"],
-        eval_dataset=dataset["test"],
+        eval_dataset=dataset["validation"],
         peft_config=peft_config,
         max_seq_length=args.max_length,
-        dataset_text_field="text",
+        dataset_text_field="messages",
         tokenizer=tokenizer,
         args=training_arguments,
         packing=False,

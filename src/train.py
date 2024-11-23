@@ -122,6 +122,9 @@ def main():
         "--learning_rate", type=float, default=2e-4, help="Learning Rate"
     )
     parser.add_argument(
+        "--save_steps", type=float, default=5000, help="Save Interval"
+    )
+    parser.add_argument(
         "--max_length",
         type=int,
         default=1024,

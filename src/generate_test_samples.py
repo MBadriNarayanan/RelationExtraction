@@ -46,7 +46,7 @@ def main():
     parser.add_argument(
         "--fine_tune_model",
         type=str,
-        default="fine_tune/llama-3.2-v1",
+        default="fine_tune/llama-3.2-v1/checkpoint-150000",
         help="HuggingFace path of the base model to be used",
     )
     parser.add_argument(
@@ -90,14 +90,15 @@ def main():
     tokenizer = AutoTokenizer.from_pretrained(args.fine_tune_model, trust_remote_code=True)
 
     with open(args.test_data) as llama_test:
+        count = len(llama_test.readlines())
         with open(args.out_file, "w") as samples:
-            for l in tqdm(llama_test):
+            for l in tqdm(llama_test, total=count):
                 messages = json.loads(l[0:-1])["messages"]
                 prompt = tokenizer.apply_chat_template(messages, tokenize=False, add_generation_prompt=True)
                 inputs = tokenizer(prompt, return_tensors='pt', padding=True, truncation=True).to("cuda")
                 outputs = model.generate(**inputs, max_new_tokens=150, num_return_sequences=1)
                 preds = tokenizer.decode(outputs[0], skip_special_tokens=True)
-                samples.write(json.dumps({"text": messages[1]["content"], "sample": preds, "gold": messages[1]["content"]}))
+                samples.write(json.dumps({"text": messages[1]["content"], "sample": preds, "gold": messages[2]["content"]}) + '\n')
             
 if __name__ == "__main__":
     main()

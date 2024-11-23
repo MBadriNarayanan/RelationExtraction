@@ -13,6 +13,7 @@ import bitsandbytes as bnb
 from datasets import load_dataset
 from dotenv import find_dotenv, load_dotenv
 from huggingface_hub import login
+from tqdm import tqdm
 from transformers import (
     AutoModelForCausalLM,
     AutoTokenizer,
@@ -90,7 +91,7 @@ def main():
 
     with open(args.test_data) as llama_test:
         with open(args.out_file, "w") as samples:
-            for l in llama_test:
+            for l in tqdm(llama_test):
                 messages = json.loads(l[0:-1])["messages"]
                 prompt = tokenizer.apply_chat_template(messages, tokenize=False, add_generation_prompt=True)
                 inputs = tokenizer(prompt, return_tensors='pt', padding=True, truncation=True).to("cuda")
@@ -98,3 +99,5 @@ def main():
                 preds = tokenizer.decode(outputs[0], skip_special_tokens=True)
                 samples.write(json.dumps({"text": messages[1]["content"], "sample": preds, "gold": messages[1]["content"]}))
             
+if __name__ == "__main__":
+    main()

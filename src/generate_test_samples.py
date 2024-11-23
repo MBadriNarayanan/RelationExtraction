@@ -82,7 +82,7 @@ def main():
         bnb_4bit_use_double_quant=True,
     )
     model = AutoModelForCausalLM.from_pretrained(
-        args.base_model,
+        args.fine_tune_model,
         quantization_config=bnb_config,
         device_map="auto",
         attn_implementation=attn_implementation,

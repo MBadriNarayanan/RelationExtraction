@@ -190,6 +190,7 @@ def main():
         logging_steps=args.logging_step,
         warmup_steps=args.warmup_step,
         logging_strategy="steps",
+        save_steps=args.save_steps,
         learning_rate=args.learning_rate,
         fp16=False,
         bf16=False,

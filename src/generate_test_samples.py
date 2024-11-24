@@ -90,9 +90,8 @@ def main():
     tokenizer = AutoTokenizer.from_pretrained(args.fine_tune_model, trust_remote_code=True)
 
     with open(args.test_data) as llama_test:
-        count = len(llama_test.readlines())
         with open(args.out_file, "w") as samples:
-            for l in tqdm(llama_test, total=count):
+            for l in tqdm(llama_test):
                 messages = json.loads(l[0:-1])["messages"]
                 prompt = tokenizer.apply_chat_template(messages, tokenize=False, add_generation_prompt=True)
                 inputs = tokenizer(prompt, return_tensors='pt', padding=True, truncation=True).to("cuda")

@@ -19,7 +19,7 @@ from transformers import (
     BitsAndBytesConfig,
     TrainingArguments,
 )
-from trl import SFTTrainer, setup_chat_format
+from trl import SFTTrainer
 
 load_dotenv(find_dotenv())
 
@@ -121,9 +121,7 @@ def main():
     parser.add_argument(
         "--learning_rate", type=float, default=2e-4, help="Learning Rate"
     )
-    parser.add_argument(
-        "--save_steps", type=float, default=5000, help="Save Interval"
-    )
+    parser.add_argument("--save_steps", type=float, default=5000, help="Save Interval")
     parser.add_argument(
         "--max_length",
         type=int,
@@ -167,9 +165,10 @@ def main():
         task_type="CAUSAL_LM",
         target_modules=modules,
     )
-    #model, tokenizer = setup_chat_format(model, tokenizer)
+
     if tokenizer.pad_token is None:
         tokenizer.pad_token = tokenizer.eos_token
+
     model = get_peft_model(model, peft_config)
 
     data_files = {

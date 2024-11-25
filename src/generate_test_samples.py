@@ -84,7 +84,7 @@ def main():
             for l in tqdm(llama_test):
                 messages = json.loads(l[0:-1])["messages"]
                 prompt = tokenizer.apply_chat_template(
-                    messages, tokenize=False, add_generation_prompt=True
+                    messages[0:2], tokenize=False, add_generation_prompt=True
                 )
                 inputs = tokenizer(
                     prompt, return_tensors="pt", padding=True, truncation=True

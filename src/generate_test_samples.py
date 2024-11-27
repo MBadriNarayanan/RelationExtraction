@@ -81,7 +81,7 @@ def main():
 
     with open(args.test_data) as llama_test:
         with open(args.out_file, "w") as samples:
-            for l in tqdm(llama_test):
+            for l in tqdm(llama_test.readlines()):
                 messages = json.loads(l[0:-1])["messages"]
                 prompt = tokenizer.apply_chat_template(
                     messages[0:2], tokenize=False, add_generation_prompt=True

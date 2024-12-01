@@ -30,6 +30,6 @@ if __name__ == "__main__":
             for g in gold:
                 if g not in preds:
                     fn += 1
-    print("Precision (micro): {:.3%}".format(tp / (tp+fp)))
-    print("   Recall (micro): {:.3%}".format(tp / (tp+fn)))
-    print("       F1 (micro): {:.3%}".format(2*tp / (2*tp + fp + fn)))
+    print("Precision (micro): {:.3%}".format(tp / (tp + fp)))
+    print("   Recall (micro): {:.3%}".format(tp / (tp + fn)))
+    print("       F1 (micro): {:.3%}".format(2 * tp / (2 * tp + fp + fn)))

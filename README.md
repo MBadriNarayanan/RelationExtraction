@@ -1,12 +1,16 @@
 # RelationExtraction
 
-A machine learning system for extracting complex relationships between entities from unstructured text data, leveraging the latest advancements in large language models.
+Extracting complex relationships between entities from unstructured text data, by fine-tuning Meta Llama3.2 Large Langauge Model (LLM).
 
 ## Contributors
 
 * Badri Narayanan Murali Krishnan [LinkedIn](https://www.linkedin.com/in/mbadrinarayanan/) [GitHub](https://github.com/MBadriNarayanan)
 * Son Dam [LinkedIn](https://www.linkedin.com/in/son-dam-856853209/) [GitHub](https://github.com/damchauson)
 * Neha Chadaga [LinkedIn](https://www.linkedin.com/in/neha-chadaga/) [GitHub](https://github.com/neha-chadaga)
+
+## Base LLM used
+
+- [Meta Llama 3.2-1B](https://huggingface.co/meta-llama/Llama-3.2-1B)
 
 ## Replicating Baseline Results
 

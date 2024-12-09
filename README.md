@@ -1,6 +1,6 @@
 # RelationExtraction
 
-Extracting complex relationships between entities from unstructured text data, by fine-tuning Meta Llama3.2 Large Langauge Model (LLM).
+Extracting complex relationships between entities from unstructured text data, by fine-tuning Meta Llama3.2 Large Language Model (LLM).
 
 ## Contributors
 

@@ -39,8 +39,7 @@ Replicated the following scripts and trained a smaller variant to get baseline r
 
 - `python3 src/metrics.py`
 
-
-### Baseline
+## Baseline
 
 * Model & Dataset used: [REBEL: Relation Extraction By End-to-end Language generation
 ](https://github.com/Babelscape/rebel)

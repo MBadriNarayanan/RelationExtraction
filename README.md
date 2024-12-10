@@ -20,7 +20,25 @@ Replicated the following scripts and trained a smaller variant to get baseline r
 - `pl_modules.py`
 - `utils.py`
 
-## Citations
+## Steps to run the code
+
+### Install requirements
+
+- `pip3 install --upgrade pip`
+- `pip3 install -r requirements.txt`
+
+### Fine-tune
+
+- `python3 src/train.py`
+
+### Generate Samples from fine-tuned model
+
+- `python3 src/generate_test_samples.py`
+
+### Generate metrics based on prediction
+
+- `python3 src/metrics.py`
+
 
 ### Baseline
 

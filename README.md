@@ -22,6 +22,12 @@ Replicated the following scripts and trained a smaller variant to get baseline r
 
 ## Steps to run the code
 
+### Download dataset
+
+- Download zip file (don't use wget): https://drive.google.com/file/d/1489PwEFe9S6_OFDQE-ovIgoma7zCsQ6T/view?usp=sharing
+- Put zip file into this directory
+- `unzip prepared_data.zip`
+
 ### Install requirements
 
 - `pip3 install --upgrade pip`
